@@ -1,0 +1,111 @@
+syntax = "proto3";
+
+package com.service.auth;
+
+/*
+Requirements:
+
+Questions:
+-> can we signup without a phone number or with any different method other than phone number?
+
+Assumptions:
+-> we would be passing the otp directly in verifyPhoneNumber and validatePhoneNumberLogin methods.
+But in real scenario we would be sending this as an encoded string for addressing security concerns
+
+*/
+
+message Error{
+  int32 errorCode = 1;
+  string message = 2;
+}
+
+message User{
+  int32 id = 1;
+  string name = 2;
+  string user_name = 3;
+  string email = 4;
+  bool isVerified = 5;
+  int32 countryCode = 6;
+  string PhoneNumber = 7;
+}
+
+message SignupWithPhoneNumberRequest{
+  User user = 1;
+}
+
+message SignupWithPhoneNumberResponse{
+  bool isSuccess = 1;
+  Error error = 2;
+  int32 userId = 3;
+}
+
+message LoginWithPhoneNumberRequest{
+  string requestId = 1;
+  int32 countryCode = 2;
+  string phoneNumber = 3;
+}
+
+message LoginWithPhoneNumberResponse{
+  bool isSuccess = 1;
+  Error error = 2;
+}
+
+message VerifyPhoneNumberRequest{
+  string requestId = 1;
+  int32 otp = 2;
+  int32 countryCode = 3;
+  string phoneNumber = 4;
+}
+
+message VerifyPhoneNumberResponse{
+  bool isSuccess = 1;
+  Error error = 2;
+}
+
+message ValidatePhoneNumberLoginRequest{
+  string requestId = 1;
+  int32 otp = 2;
+  int32 countryCode = 3;
+  string phoneNumber = 4;
+}
+
+message ValidatePhoneNumberLoginResponse{
+  bool isSuccess = 1;
+  Error error = 2;
+}
+
+message GetProfileRequest{
+  string requestId = 1;
+  int32 userId = 2;
+}
+
+message GetProfileResponse{
+  bool isSuccess = 1;
+  Error error = 2;
+  User user = 3;
+}
+
+
+message GetProfileByPhoneNumberRequest{
+  string requestId = 1;
+  int32 countryCode = 2;
+  string phoneNumber = 3;
+}
+
+message GetProfileByPhoneNumberResponse{
+  bool isSuccess = 1;
+  Error error = 2;
+  User user = 3;
+}
+
+service AuthService{
+  rpc signupWithPhoneNumber(SignupWithPhoneNumberRequest) returns (SignupWithPhoneNumberResponse) {}
+  rpc loginWithPhoneNumber(LoginWithPhoneNumberRequest) returns (LoginWithPhoneNumberResponse) {}
+  rpc verifyPhoneNumber(VerifyPhoneNumberRequest) returns (VerifyPhoneNumberResponse) {}
+  rpc validatePhoneNumberLogin(ValidatePhoneNumberLoginRequest) returns (ValidatePhoneNumberLoginResponse) {}
+  rpc getProfile(GetProfileRequest) returns (GetProfileResponse);
+
+  // Additional methods
+  // We might want to get profile based on mobile nUmber as well
+  rpc getProfileByPhoneNumber(GetProfileByPhoneNumberRequest) returns (GetProfileByPhoneNumberResponse) {}
+}
