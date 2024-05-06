@@ -98,7 +98,7 @@ func (a authService) VerifyOtp(request *auth.VerifyPhoneNumberRequest) error {
 		a.InsertEvent(string(INCORRECT_OTP), user.PhoneNumber)
 		return errors.New("invalid OTP")
 	}
-	err = a.UpdateVerifiedTrueById(user.Id)
+	err = a.MarkVerified(user.Id)
 	if err != nil {
 		return err
 	}

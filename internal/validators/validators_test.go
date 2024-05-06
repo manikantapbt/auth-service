@@ -42,13 +42,11 @@ func TestValidateSignupWithPhoneNumberRequest(t *testing.T) {
 func TestValidateLoginWithPhoneNumberRequest(t *testing.T) {
 	validRequest := &v1.LoginWithPhoneNumberRequest{
 		PhoneNumber: "+911234567890",
-		UserId:      "user123",
 		CountryCode: 91,
 	}
 
 	invalidRequest := &v1.LoginWithPhoneNumberRequest{
 		PhoneNumber: "", // Empty phone number
-		UserId:      "user123",
 		CountryCode: 91,
 	}
 

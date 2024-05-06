@@ -56,6 +56,7 @@ func (o otpGenerator) otpHelper(phoneNumber string, secretKey string) (int32, er
 	otp = otp % 1000000 // Ensure OTP is at most 6 digits
 	if otp < 100000 {
 		diff := 100000 - otp
+		// adding a prime number as salt
 		otp += diff + 137
 	}
 	return int32(otp), nil

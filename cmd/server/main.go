@@ -21,7 +21,7 @@ func main() {
 		log.Fatal(err.Error())
 		return
 	}
-	authServer := server.NewAuthServer(deps.Service)
+	authServer := server.NewAuthServer(deps.AuthService)
 	mux := http.NewServeMux()
 	path, handler := v1connect.NewAuthServiceHandler(authServer)
 	mux.Handle(path, handler)

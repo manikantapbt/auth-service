@@ -14,14 +14,14 @@ import (
 
 type Dependencies struct {
 	Db                 *sql.DB
-	Service            service.IAuthService
+	AuthService        service.IAuthService
 	RabbitMQConnection *amqp.Connection
 	Channel            *amqp.Channel
 	GateWayService     gateway.IMessagePublisher
 }
 
 func Initialize(config config.Config) (*Dependencies, error) {
-	db, err := sql.Open("postgres", config.Database.ConnectionString)
+	db, err := sql.Open("postgres", config.DatabaseConfig.ConnectionString)
 	if err != nil {
 		return nil, err
 	}
@@ -29,7 +29,7 @@ func Initialize(config config.Config) (*Dependencies, error) {
 		log.Fatal(err)
 		return nil, err
 	}
-	conn, err := amqp.Dial(config.RabbitMQ.ConnectionString)
+	conn, err := amqp.Dial(config.RabbitMQConfig.ConnectionString)
 	if err != nil {
 		log.Fatal(err)
 		return nil, err
@@ -56,7 +56,7 @@ func Initialize(config config.Config) (*Dependencies, error) {
 	authService := service.NewAuthService(newRepository, validator, publisher, generator, eventRepository)
 	return &Dependencies{
 		Db:                 db,
-		Service:            authService,
+		AuthService:        authService,
 		RabbitMQConnection: conn,
 		Channel:            ch,
 	}, nil
@@ -68,18 +68,18 @@ func (d Dependencies) ShutDown() error {
 		log.Fatal(err)
 		return err
 	}
-	log.Println("Database connection closed")
+	log.Println("DatabaseConfig connection closed")
 	err = d.Channel.Close()
 	if err != nil {
 		log.Fatal(err)
 		return err
 	}
-	log.Println("RabbitMQ Channel closed")
+	log.Println("RabbitMQConfig Channel closed")
 	err = d.RabbitMQConnection.Close()
 	if err != nil {
 		log.Fatal(err)
 		return err
 	}
-	log.Println("RabbitMQ connection closed")
+	log.Println("RabbitMQConfig connection closed")
 	return nil
 }

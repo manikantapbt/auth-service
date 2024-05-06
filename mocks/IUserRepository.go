@@ -92,7 +92,7 @@ func (_m *IUserRepository) SaveUser(user *models.User) (*models.User, error) {
 }
 
 // UpdateVerifiedTrueById provides a mock function with given fields: id
-func (_m *IUserRepository) UpdateVerifiedTrueById(id int32) error {
+func (_m *IUserRepository) MarkVerified(id int32) error {
 	ret := _m.Called(id)
 
 	var r0 error

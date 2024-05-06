@@ -22,7 +22,7 @@ type IUserRepository interface {
 	SaveUser(user *models.User) (*models.User, error)
 	GetUser(userId int32) (*models.User, error)
 	GetUserByPhoneNumberAndCountry(countryCode int32, phoneNumber string) (*models.User, error)
-	UpdateVerifiedTrueById(id int32) error
+	MarkVerified(id int32) error
 }
 
 func NewUserRepository(db *sql.DB) IUserRepository {
@@ -65,7 +65,7 @@ func (p *psqlUserRepository) GetUserByPhoneNumberAndCountry(countryCode int32, p
 	return &user, nil
 }
 
-func (p *psqlUserRepository) UpdateVerifiedTrueById(id int32) error {
+func (p *psqlUserRepository) MarkVerified(id int32) error {
 	_, err := p.db.Exec(UPDATE_VERIFIED, id)
 	if err != nil {
 		return err

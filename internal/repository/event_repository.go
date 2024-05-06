@@ -24,6 +24,7 @@ type eventRepository struct {
 func (r *eventRepository) InsertEvent(event string, phoneNumber string) {
 	_, err := r.db.Exec(query, phoneNumber, event)
 	if err != nil {
+		// ignoring event db query errors as they are of low priority
 		log.Println(err)
 	}
 }

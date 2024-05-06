@@ -30,9 +30,8 @@ func (v *validator) ValidateSignupWithPhoneNumberRequest(request *v1.SignupWithP
 
 func (v *validator) ValidateLoginWithPhoneNumberRequest(request *v1.LoginWithPhoneNumberRequest) error {
 	phoneErr := validatePhoneNumber(request.PhoneNumber)
-	userErr := validateUserName(request.UserId) // TODO: not necessary?
 	countryErr := validateCountryCodes(request.CountryCode)
-	return errors.Join(phoneErr, userErr, countryErr)
+	return errors.Join(phoneErr, countryErr)
 }
 
 func (v *validator) ValidateVerifyPhoneNumberRequest(request *v1.VerifyPhoneNumberRequest) error {
@@ -50,8 +49,6 @@ func (v *validator) ValidatePhoneNumberLogin(request *v1.ValidatePhoneNumberLogi
 }
 
 func (v *validator) ValidateGetProfileByMobileNumberRequest(request *v1.GetProfileByPhoneNumberRequest) error {
-	//phoneErr := validatePhoneNumber(request.PhoneNumber)
-	// TODO: request id validation
 	countryErr := validateCountryCodes(request.CountryCode)
 	phoneErr := validatePhoneNumber(request.PhoneNumber)
 	return errors.Join(countryErr, phoneErr)
