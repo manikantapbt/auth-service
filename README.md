@@ -174,6 +174,11 @@ running tests with code coverage
 make test
 ```
 
+### DB Setup
+
+Provide the postgres url in config file and create the tables using [tables.sql](tables.sql)
+
+
 ### Running the app
 ```shell
 make mod
