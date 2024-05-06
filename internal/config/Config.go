@@ -13,7 +13,7 @@ func Load() Config {
 		ConnectionString: "postgresql://postgres:abcd@localhost:5432/postgres?sslmode=disable",
 	}
 	mq := RabbitMQ{
-		ConnectionString: "amqps://xouvlqri:G9iV0VCk1LErizVGdJHHQ2BzGsKU4KWa@puffin.rmq2.cloudamqp.com/xouvlqri",
+		ConnectionString: "amqps://<username>:<password>@<host>/<virtual_host>",
 	}
 	config := OTPConfig{
 		SecretKey: "your_secret_key",
