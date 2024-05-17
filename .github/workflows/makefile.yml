@@ -16,9 +16,11 @@ jobs:
 
     - name: Install dependencies
       run: make install
+      
+    - name: Run Mod
+      run: make mod      
 
     - name: Run tests
       run: make test
 
-    - name: Run check
-      run: make run
+
